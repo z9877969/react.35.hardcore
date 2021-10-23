@@ -1,0 +1,31 @@
+[
+  {
+    "type": "date",
+    "title": "День",
+    "name": "date"
+  },
+  {
+    "type": "time",
+    "title": "Время",
+    "name": "time"
+  },
+  {
+    "type": "button",
+    "title": "Категория",
+    "name": "category"
+  },
+  {
+    "title": "Сумма",
+    "name": "sum",
+    "placeholder": "Введите сумму"
+  },
+  {
+    "type": "button",
+    "title": "Валюта",
+    "name": "currency"
+  },
+  {
+    "name": "comment",
+    "placeholder": "Комментарий"
+  }
+]

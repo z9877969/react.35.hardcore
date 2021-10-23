@@ -1,52 +1,27 @@
-import { Component } from "react";
+import { useEffect, useState } from "react";
 import MainPage from "../_pages/MainPage";
 import TransactionPage from "../_pages/TransactionPage";
 import BalancePage from "../_pages/BalancePage";
+import TransactionsHistoryPage from "../_pages/TransactionsHistoryPage";
+import { useAppContext } from "../AppProvider/AppProvider";
 
-class App extends Component {
-  state = {
-    activePage: "",
-    costs: [],
-    incomes: [],
-  };
+const App = () => {
+  const { activePage, costs, incomes } = useAppContext();
 
-  handleOpenPage = (activePage) => {
-    this.setState({ activePage });
-  };
-
-  handleClosePage = () => this.setState({ activePage: "" });
-
-  addTransaction = ({ transType, transaction }) => {
-    this.setState((prevState) => ({
-      [transType]: [...prevState[transType], transaction],
-    }));
-  };
-
-  render() {
-    const { activePage } = this.state;
-    switch (activePage) {
-      case "costs":
-        return (
-          <TransactionPage
-            transType={activePage}
-            handleClosePage={this.handleClosePage}
-            addTransaction={this.addTransaction}
-          />
-        );
-      case "incomes":
-        return (
-          <TransactionPage
-            transType={activePage}
-            handleClosePage={this.handleClosePage}
-            addTransaction={this.addTransaction}
-          />
-        );
-      case "balance":
-        return <BalancePage />;
-      default:
-        return <MainPage handleOpenPage={this.handleOpenPage} />;
-    }
+  switch (activePage) {
+    case "costs":
+      return <TransactionPage transType={activePage} />;
+    case "incomes":
+      return <TransactionPage transType={activePage} />;
+    case "costsHistory":
+      return <TransactionsHistoryPage transactions={costs} />;
+    case "incomesHistory":
+      return <TransactionsHistoryPage transactions={incomes} />;
+    case "balance":
+      return <BalancePage />;
+    default:
+      return <MainPage />;
   }
-}
+};
 
 export default App;

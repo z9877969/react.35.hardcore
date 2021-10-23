@@ -1,8 +1,12 @@
-const StatisticsBtns = () => {
+const StatisticsBtns = ({ handleOpenPage }) => {
   return (
     <>
-      <button type="button">Все расходы</button>
-      <button type="button">Все доходы</button>
+      <button onClick={() => handleOpenPage("costsHistory")} type="button">
+        Все расходы
+      </button>
+      <button onClick={() => handleOpenPage("incomesHistory")} type="button">
+        Все доходы
+      </button>
     </>
   );
 };

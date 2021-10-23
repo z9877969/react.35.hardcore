@@ -5,8 +5,10 @@ import {
   mainInfoIncomes,
   mainInfoBalance,
 } from "../../assets/data/mainInfoOptions.json";
+import { useAppContext } from "../AppProvider/AppProvider";
 
-const MainPage = ({ handleOpenPage }) => {
+const MainPage = () => {
+  const { handleOpenPage } = useAppContext();
   return (
     <section>
       <h1>Журнал расходов</h1>
@@ -28,7 +30,7 @@ const MainPage = ({ handleOpenPage }) => {
         activePage="balance"
         handleOpenPage={handleOpenPage}
       />
-      <StatisticsBtns />
+      <StatisticsBtns handleOpenPage={handleOpenPage} />
     </section>
   );
 };
