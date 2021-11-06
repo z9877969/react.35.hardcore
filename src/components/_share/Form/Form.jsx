@@ -1,6 +1,13 @@
 import LabelInput from "../LabelInput/LabelInput";
 
-const Form = ({ cbOnSubmit, handleChange, formOpts, formValues, btnTitle }) => {
+const Form = ({
+  cbOnSubmit,
+  handleChange,
+  handleClick,
+  formOpts,
+  formValues,
+  btnTitle,
+}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     cbOnSubmit();
@@ -17,6 +24,7 @@ const Form = ({ cbOnSubmit, handleChange, formOpts, formValues, btnTitle }) => {
           value={formValues[name]}
           placeholder={placeholder}
           cbOnChange={handleChange}
+          cbOnClick={handleClick}
         />
       ))}
     </form>

@@ -5,10 +5,22 @@ import {
   mainInfoIncomes,
   mainInfoBalance,
 } from "../../assets/data/mainInfoOptions.json";
-import { useAppContext } from "../AppProvider/AppProvider";
 
-const MainPage = () => {
-  const { handleOpenPage } = useAppContext();
+const MainPage = ({ history, location }) => {
+  const openTransactionPage = (transType) => {
+    const nextLocation = {
+      pathname: "/transaction/" + transType,
+      state: { string: "prevLocation", from: location },
+    };
+    history.push(nextLocation); // costs || incomes
+  };
+
+  const openTransactionHistoryPage = (transType) =>
+    history.push(`/history/${transType}`); // costs || incomes
+
+  const openBalancePage = () => history.push("/balance");
+  // /history/:transType
+
   return (
     <section>
       <h1>Журнал расходов</h1>
@@ -16,21 +28,21 @@ const MainPage = () => {
         title={"Расходы"}
         options={mainInfoCosts}
         activePage="costs"
-        handleOpenPage={handleOpenPage}
+        handleOpenPage={openTransactionPage}
       />
       <MainInfo
         title={"Доходы"}
         options={mainInfoIncomes}
         activePage="incomes"
-        handleOpenPage={handleOpenPage}
+        handleOpenPage={openTransactionPage}
       />
       <MainInfo
         title={"Баланс"}
         options={mainInfoBalance}
         activePage="balance"
-        handleOpenPage={handleOpenPage}
+        handleOpenPage={openBalancePage}
       />
-      <StatisticsBtns handleOpenPage={handleOpenPage} />
+      <StatisticsBtns handleOpenPage={openTransactionHistoryPage} />
     </section>
   );
 };

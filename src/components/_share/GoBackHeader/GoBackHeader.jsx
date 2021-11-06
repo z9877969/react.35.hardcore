@@ -1,4 +1,10 @@
-const GoBackHeader = ({ title, cbGoBack }) => {
+import { useHistory } from "react-router-dom";
+
+const GoBackHeader = ({ title }) => {
+  const { push, location } = useHistory();
+
+  const cbGoBack = () => push(location.state?.from || "/");
+
   return (
     <header>
       <button type="button" onClick={cbGoBack}>

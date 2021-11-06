@@ -20,6 +20,7 @@ const AppProvider = ({ children }) => {
       setCosts((prevCosts) => [...prevCosts, transaction]);
     transType === "incomes" &&
       setIncomes((prevIncomes) => [...prevIncomes, transaction]);
+    console.log("transtype :>> ", transType);
   };
 
   useEffect(() => {
