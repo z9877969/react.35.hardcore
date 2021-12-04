@@ -4,19 +4,32 @@ import MainPage from "../_pages/MainPage";
 import TransactionPage from "../_pages/TransactionPage";
 import BalancePage from "../_pages/BalancePage";
 import TransactionsHistoryPage from "../_pages/TransactionsHistoryPage";
-import { useAppContext } from "../AppProvider/AppProvider";
+import AuthPage from "../_pages/AuthPage";
+import { useDispatch, useSelector } from "react-redux";
+import { getIsAuth } from "../../redux/auth/authSelector";
+import { logOut } from "../../redux/auth/authActions";
+import { getCurUser } from "../../redux/auth/authOperations";
 
 const App = () => {
+  const dispatch = useDispatch();
+  const isAuth = useSelector(getIsAuth);
+  const handleLogOut = () => {
+    dispatch(logOut());
+  };
 
-  return (
+  // const getErrorStatus = (state) => +state.auth.error.slice(-3);
+  const getErrorStatus = (state) => state.auth.error.status;
+  const errorStatus = useSelector(getErrorStatus);
+  useEffect(() => {
+    isAuth && dispatch(getCurUser());
+  }, []);
+  useEffect(() => {
+    errorStatus === 401 && dispatch(logOut());
+  }, [errorStatus]);
+
+  return isAuth ? (
     <>
-      {/* <Route path="/">
-        <MainPage costs={costs} />
-        </Route>
-        <Route
-        path="/"
-        render={(routerProps) => <MainPage costs={costs} {...routerProps} />}
-      /> */}
+      {isAuth && <button onClick={handleLogOut}>LogOut</button>}
       <Switch>
         <Route exact path="/" component={MainPage} />
         <Route path={"/transaction/:transType"} component={TransactionPage} />
@@ -25,30 +38,18 @@ const App = () => {
           component={TransactionsHistoryPage}
         />
         <Route path={"/balance"} component={BalancePage} />
-        <Route path="/defPage">
-          <h1>defultPage</h1>
-        </Route>
-        <Redirect to="/defPage" />
+        {/* <Route path="/defPage">
+        <h1>defultPage</h1>
+      </Route> */}
+        <Redirect to="/" />
       </Switch>
     </>
+  ) : (
+    <Switch>
+      <Route path="/auth/:authType" component={AuthPage} />
+      <Redirect to="/auth/login" />
+    </Switch>
   );
 };
 
-// match || location || history
-
 export default App;
-
-// switch (activePage) {
-//   case "costs":
-//     return <TransactionPage transType={activePage} />;
-//   case "incomes":
-//     return <TransactionPage transType={activePage} />;
-//   case "costsHistory":
-//     return <TransactionsHistoryPage transactions={costs} />;
-//   case "incomesHistory":
-//     return <TransactionsHistoryPage transactions={incomes} />;
-//   case "balance":
-//     return <BalancePage />;
-//   default:
-//     return <MainPage />;
-// }

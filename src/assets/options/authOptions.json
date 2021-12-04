@@ -1,0 +1,12 @@
+[
+  {
+    "title": "Email",
+    "name": "email",
+    "placeholder": "Input email..."
+  },
+  {
+    "title": "Password",
+    "name": "password",
+    "placeholder": "Input password..."
+  }
+]
